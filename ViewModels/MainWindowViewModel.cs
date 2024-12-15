@@ -47,6 +47,7 @@ public partial class MainWindowViewModel : ObservableObject
     public async Task NavigateToUrl()
     {
         Content.Clear();
+
         if (PromptRequested)
             Url = string.Join("?", Url.Split(['?'], 2)[0], Uri.EscapeDataString(PromptText));
 
