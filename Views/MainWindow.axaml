@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Telescope.ViewModels"
+        xmlns:v="using:Telescope.Views"
+        xmlns:g="using:Telescope.Gemini"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Telescope.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Telescope">
+    <DockPanel>
+        <TextBox DockPanel.Dock="Top" Text="{Binding Url, Mode=TwoWay}">
+            <TextBox.InnerRightContent>
+                <Button Content="Go" Command="{Binding NavigateToUrl}"/>
+            </TextBox.InnerRightContent>
+        </TextBox>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Status, Mode=OneWay}" />
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Content}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ItemsControl.DataTemplates>
+                    <DataTemplate DataType="{x:Type g:GeminiHeading}">
+                        <Grid ColumnDefinitions="50,*">
+                            <TextBlock Text="{Binding Prefix}" Foreground="Gray" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Content}" Grid.Column="1" ClipToBounds="False" TextWrapping="Wrap" TextAlignment="Start" FontWeight="Bold" FontSize="24"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type g:GeminiText}">
+                        <Grid ColumnDefinitions="50,*">
+                            <TextBlock Text="{Binding Prefix}" Foreground="Gray" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Content}" Grid.Column="1" ClipToBounds="False" TextWrapping="Wrap" TextAlignment="Start"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type g:GeminiLink}">
+                        <Grid ColumnDefinitions="50,*">
+                            <TextBlock Text="{Binding Prefix}" Foreground="Gray" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Content}" Grid.Column="1" ClipToBounds="False" TextWrapping="Wrap" TextAlignment="Start" TextDecorations="Underline" Cursor="Hand" ToolTip.Tip="{Binding UrlHint}" PointerPressed="OnLinkedPressed"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type g:GeminiQuote}">
+                        <Grid ColumnDefinitions="50,*">
+                            <TextBlock Text="{Binding Prefix}" Foreground="LightGray" Background="Gray" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Content}" Grid.Column="1" ClipToBounds="False" TextWrapping="Wrap" TextAlignment="Start"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type g:GeminiQuote}">
+                        <Grid ColumnDefinitions="50,*">
+                            <TextBlock Text="{Binding Prefix}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Content}" Grid.Column="1" ClipToBounds="False" TextWrapping="Wrap" TextAlignment="Start"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type g:GeminiPreformatted}">
+                        <Grid ColumnDefinitions="50,*">
+                            <TextBlock Text="{Binding Prefix}" VerticalAlignment="Center" />
+                            <Border Grid.Column="1" BorderBrush="Black" Background="Gainsboro" BorderThickness="1">
+                                <TextBlock Text="{Binding Body}" ClipToBounds="False" FontFamily="Consolas" TextWrapping="Wrap" TextAlignment="Start" ToolTip.Tip="{Binding Content}"/>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.DataTemplates>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
