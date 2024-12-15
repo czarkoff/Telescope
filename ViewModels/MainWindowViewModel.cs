@@ -46,6 +46,9 @@ public partial class MainWindowViewModel : ObservableObject
                     Url = redirect.RedirectUrl.ToString();
                     await NavigateToUrl();
                     return;
+                case GeminiErrorResponse error:
+                    Status = string.Format("Error {0}: {1}", error.StatusCode, error.StatusDetail ?? "unknown error");
+                    break;
             }
         }
         catch (Exception ex)
