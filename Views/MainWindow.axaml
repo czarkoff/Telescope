@@ -16,6 +16,17 @@
                 <Button Content="Go" Command="{Binding NavigateToUrl}"/>
             </TextBox.InnerRightContent>
         </TextBox>
+        <TextBox DockPanel.Dock="Top" Text="{Binding PromptText, Mode=OneWayToSource}" IsVisible="{Binding PromptRequested}">
+            <TextBox.InnerLeftContent>
+                <TextBlock Text="{Binding PromptLabel}" VerticalAlignment="Center"/>
+            </TextBox.InnerLeftContent>
+            <TextBox.InnerRightContent>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Send" Command="{Binding NavigateToUrl}"/>
+                    <Button Content="Cancel" Command="{Binding CancelPrompt}"/>
+                </StackPanel>
+            </TextBox.InnerRightContent>
+        </TextBox>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding Status, Mode=OneWay}" />
         <ScrollViewer>
             <ItemsControl ItemsSource="{Binding Content}" ScrollViewer.VerticalScrollBarVisibility="Auto">

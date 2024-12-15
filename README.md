@@ -4,7 +4,6 @@ At this stage *Telescope* is very-very bare bones.
 You basically can navigate around Gemini space to a certain degree,  but with a lot of rough edges.
 Even the most common functionality that one expects from a browser is currently missing,  such as:
 
-* Prompts
 * Authentication and basic security
 * UI polish
 * Error handling

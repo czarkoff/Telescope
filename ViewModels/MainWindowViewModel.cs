@@ -23,12 +23,35 @@ public partial class MainWindowViewModel : ObservableObject
         set => SetProperty(ref _status, value);
     }
 
+    public string PromptLabel
+    {
+        get => _promptLabel;
+        set => SetProperty(ref _promptLabel, value);
+    }
+
+    public string PromptText
+    {
+        get => _promptText;
+        set => SetProperty(ref _promptText, value);
+    }
+
+    public bool PromptRequested
+    {
+        get => _promptRequested;
+        set => SetProperty(ref _promptRequested, value);
+    }
+
     private bool _urlIsOk => Uri.TryCreate(Url, UriKind.Absolute, out _);
 
     [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(_urlIsOk))]
     public async Task NavigateToUrl()
     {
         Content.Clear();
+        if (PromptRequested)
+            Url = string.Join("?", Url.Split(['?'], 2)[0], Uri.EscapeDataString(PromptText));
+
+        PromptRequested = false;
+
         if (!Uri.TryCreate(Url, UriKind.Absolute, out Uri? uri))
             return;
 
@@ -47,7 +70,8 @@ public partial class MainWindowViewModel : ObservableObject
                     await NavigateToUrl();
                     return;
                 case GeminiPromptResponse prompt:
-                    Status = string.Format("Prompt was sent,  but not supported yet");
+                    PromptRequested = true;
+                    PromptLabel = prompt.Prompt;
                     break;
                 case GeminiAuthResponse auth:
                     Status = string.Format("Authentication required,  but not supported yet");
@@ -63,5 +87,10 @@ public partial class MainWindowViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    public void CancelPrompt() => PromptRequested = false;
+
     private string? _url, _status;
+    private string _promptLabel = string.Empty, _promptText = string.Empty;
+    private bool _promptRequested;
 }
