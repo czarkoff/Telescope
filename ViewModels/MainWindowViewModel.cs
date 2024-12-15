@@ -46,6 +46,12 @@ public partial class MainWindowViewModel : ObservableObject
                     Url = redirect.RedirectUrl.ToString();
                     await NavigateToUrl();
                     return;
+                case GeminiPromptResponse prompt:
+                    Status = string.Format("Prompt was sent,  but not supported yet");
+                    break;
+                case GeminiAuthResponse auth:
+                    Status = string.Format("Authentication required,  but not supported yet");
+                    break;
                 case GeminiErrorResponse error:
                     Status = string.Format("Error {0}: {1}", error.StatusCode, error.StatusDetail ?? "unknown error");
                     break;
