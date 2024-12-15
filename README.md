@@ -4,7 +4,7 @@ At this stage *Telescope* is very-very bare bones.
 You basically can navigate around Gemini space to a certain degree,  but with a lot of rough edges.
 Even the most common functionality that one expects from a browser is currently missing,  such as:
 
-* Redirects
+* Prompts
 * Authentication and basic security
 * UI polish
 * Error handling
@@ -17,7 +17,8 @@ Even the most common functionality that one expects from a browser is currently 
 * [ ] Support browser history.
 * [ ] Support TOFU (that is, present all new certificates to the user and pin them when the user accepts them).
 * [ ] Tabbed UI.
-* [ ] Allow customizing the presentation.
+* [ ] Polished UI/UX.
+* [ ] Customization.
 
 With this being one of my weekend projects,  I would not recommend to hold your breath for the release.
 
